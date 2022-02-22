@@ -3,8 +3,8 @@ const db = require("./db/connection");
 const cTable = require("console.table");
 // Department Functions
 const {
-  departmentsHandler,
-  addDepartment,
+  getAllDepartments,
+  addDepartmentHandler,
 } = require("./lib/db-functions/departments");
 // Role Functions
 const { getAllRoles, addRoleHandler } = require("./lib/db-functions/roles");
@@ -42,14 +42,11 @@ const exitApplication = () => {
 
 const choiceHandler = async ({ options: choice }) => {
   if (choice === "View All Departments") {
-    await departmentsHandler();
+    await getAllDepartments();
   }
 
   if (choice === "Add a Department") {
-    await inquirer
-      .prompt(newDepartment)
-      .then((choice) => addDepartment(choice))
-      .catch((err) => console.log(err));
+    await addDepartmentHandler();
   }
 
   if (choice === "View All Roles") {
