@@ -1,24 +1,30 @@
 const inquirer = require("inquirer");
-const { startOptions } = require("./lib/inquirer-questions/questions");
+const { startOptions, goAgain } = require("./lib/inquirer-questions/questions");
 const db = require("./db/connection");
 const cTable = require("console.table");
+const { departmentsHandler } = require("./lib/db-functions/departments");
 
-let departmentsData;
+const startApplication = async () => {
+  await inquirer
+    .prompt(startOptions)
+    .then((choice) => choiceHandler(choice))
+    .catch((err) => console.error(err));
 
-const getAllDepartments = async () => {
-  await db
-    .promise()
-    .query(`SELECT * FROM departments`)
-    .then(([rows]) => {
-      console.log(rows);
-      departmentsData = rows;
+  await inquirer
+    .prompt(goAgain)
+    .then((choice) => {
+      if (choice.again) {
+        startApplication();
+      } else {
+        exitApplication();
+      }
     })
-    .catch(console.log);
+    .catch((err) => console.error(err));
 };
 
-const departmentsHandler = async () => {
-  await getAllDepartments();
-  console.log(cTable.getTable(departmentsData));
+const exitApplication = () => {
+  console.log("Goodbye!");
+  db.end();
 };
 
 const choiceHandler = async (choice) => {
@@ -27,4 +33,4 @@ const choiceHandler = async (choice) => {
   }
 };
 
-inquirer.prompt(startOptions).then((choice) => choiceHandler(choice));
+startApplication();
