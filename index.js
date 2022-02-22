@@ -1,8 +1,17 @@
 const inquirer = require("inquirer");
-const { startOptions, goAgain } = require("./lib/inquirer-questions/questions");
 const db = require("./db/connection");
 const cTable = require("console.table");
-const { departmentsHandler } = require("./lib/db-functions/departments");
+
+const {
+  departmentsHandler,
+  addDepartment,
+} = require("./lib/db-functions/departments");
+
+const {
+  startOptions,
+  goAgain,
+  newDepartment,
+} = require("./lib/inquirer-questions/questions");
 
 const startApplication = async () => {
   await inquirer
@@ -12,8 +21,8 @@ const startApplication = async () => {
 
   await inquirer
     .prompt(goAgain)
-    .then((choice) => {
-      if (choice.again) {
+    .then(({ again }) => {
+      if (again) {
         startApplication();
       } else {
         exitApplication();
@@ -27,9 +36,13 @@ const exitApplication = () => {
   db.end();
 };
 
-const choiceHandler = async (choice) => {
-  if (choice.options === "View All Departments") {
+const choiceHandler = async ({ options: choice }) => {
+  if (choice === "View All Departments") {
     await departmentsHandler();
+  } else if (choice === "Add a Department") {
+    await inquirer
+      .prompt(newDepartment)
+      .then((departmentName) => addDepartment(departmentName));
   }
 };
 
