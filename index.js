@@ -63,7 +63,10 @@ const choiceHandler = async ({ options: choice }) => {
   if (choice === "Add An Employee") {
     await addEmployeeHandler();
   }
+
+  if (choice === "Update An Employee Role") {
+    await updateEmployeeRole();
+  }
 };
 
-// startApplication();
-updateEmployeeRole();
+startApplication();
