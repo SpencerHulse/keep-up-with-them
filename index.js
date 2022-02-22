@@ -1,6 +1,5 @@
 const inquirer = require("inquirer");
 const db = require("./db/connection");
-const cTable = require("console.table");
 // Department Functions
 const {
   getAllDepartments,
@@ -9,13 +8,13 @@ const {
 // Role Functions
 const { getAllRoles, addRoleHandler } = require("./lib/db-functions/roles");
 // Employee Functions
-const { employeesHandler } = require("./lib/db-functions/employees");
-// Inquirer Prompts
 const {
-  startOptions,
-  goAgain,
-  newDepartment,
-} = require("./lib/inquirer-questions/prompts");
+  getAllEmployees,
+  addEmployeeHandler,
+  updateEmployeeRole,
+} = require("./lib/db-functions/employees");
+// Inquirer Prompts
+const { startOptions, goAgain } = require("./lib/inquirer-questions/prompts");
 
 const startApplication = async () => {
   await inquirer
@@ -58,8 +57,13 @@ const choiceHandler = async ({ options: choice }) => {
   }
 
   if (choice === "View All Employees") {
-    await employeesHandler();
+    await getAllEmployees();
+  }
+
+  if (choice === "Add An Employee") {
+    await addEmployeeHandler();
   }
 };
 
-startApplication();
+// startApplication();
+updateEmployeeRole();
