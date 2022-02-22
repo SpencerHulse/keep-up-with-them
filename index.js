@@ -8,6 +8,8 @@ const {
 } = require("./lib/db-functions/departments");
 // Role Functions
 const { rolesHandler, addRole } = require("./lib/db-functions/roles");
+// Employee Functions
+const { employeesHandler } = require("./lib/db-functions/employees");
 // Inquirer Prompts
 const {
   startOptions,
@@ -55,6 +57,10 @@ const choiceHandler = async ({ options: choice }) => {
 
   if (choice === "Add a Role") {
     await addRole();
+  }
+
+  if (choice === "View All Employees") {
+    await employeesHandler();
   }
 };
 
