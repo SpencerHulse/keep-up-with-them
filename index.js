@@ -7,7 +7,7 @@ const {
   addDepartment,
 } = require("./lib/db-functions/departments");
 // Role Functions
-const { rolesHandler, addRole } = require("./lib/db-functions/roles");
+const { getAllRoles, addRoleHandler } = require("./lib/db-functions/roles");
 // Employee Functions
 const { employeesHandler } = require("./lib/db-functions/employees");
 // Inquirer Prompts
@@ -48,15 +48,16 @@ const choiceHandler = async ({ options: choice }) => {
   if (choice === "Add a Department") {
     await inquirer
       .prompt(newDepartment)
-      .then((choice) => addDepartment(choice));
+      .then((choice) => addDepartment(choice))
+      .catch((err) => console.log(err));
   }
 
   if (choice === "View All Roles") {
-    await rolesHandler();
+    await getAllRoles();
   }
 
   if (choice === "Add a Role") {
-    await addRole();
+    await addRoleHandler();
   }
 
   if (choice === "View All Employees") {
