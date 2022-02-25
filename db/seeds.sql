@@ -26,6 +26,7 @@ INSERT INTO employees (first_name, last_name, role_id, manager_id)
 VALUES
 -- CEO Role(1) Employee ID(1)
 ("Spencer", "Hulse", 1, null),
+("Spencer", "Hulse", 1, null),
 -- COO Role(2) Employee ID(2)
 ("Jesse", "Worley", 2, 1),
 -- Head of HR Role(3) Employee ID(3)
