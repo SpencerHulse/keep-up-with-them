@@ -5,7 +5,6 @@ VALUES
 ("Human Resources"),
 ("Sales"),
 ("Secretarial"),
-("Security"),
 ("Security");
 
 INSERT INTO roles (job_title, salary, department_id)
